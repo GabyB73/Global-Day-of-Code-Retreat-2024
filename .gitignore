@@ -1,0 +1,8 @@
+# Ignorar archivos y carpetas de compilación
+java/target/
+python/__pycache__/
+go/bin/
+
+# Ignorar archivos de sistema
+*.log
+.DS_Store
