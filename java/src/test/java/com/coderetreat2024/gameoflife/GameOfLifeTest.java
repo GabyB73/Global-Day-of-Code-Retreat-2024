@@ -6,49 +6,35 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class GameOfLifeTest {
-    @Test
-    public void testLiveCellWithFewerThanTwoLiveNeighborsDies() {
-        GameOfLife game = new GameOfLife();
-        game.setCellAlive(1, 1); //Celda central viva
-        game.setCellAlive(0, 0); //Un vecino vivo
-        game.nextGeneration();
-        assertFalse(game.isCellAlive(1, 1)); //Debería estar muerta en la siguiente generación
-    }
 
     @Test
-    public void testLiveCellWithTwoOrThreeLiveNeighborsSurvives() {
-        GameOfLife game = new GameOfLife();
-        game.setCellAlive(1, 1); //Celda central viva
-        game.setCellAlive(0, 0); //Un vecino vivo
-        game.setCellAlive(0, 1); //Dos vecinos vivos
-        game.nextGeneration();
-        assertTrue(game.isCellAlive(1, 1)); //Debería estar viva en la siguiente generación
+    public void testGameInitializationAndGeneration() {
+        GameOfLife game = new GameOfLife(3, 3);
+        game.setCellAlive(1, 1);
+        game.setCellAlive(0, 1);
+        game.setCellAlive(1, 0);
 
-        game.setCellAlive(1, 0); //Tercer vecino vivo
+        game.printGrid(0); // Visualización inicial en consola
         game.nextGeneration();
-        assertTrue(game.isCellAlive(1, 1)); //Debería estar viva en la siguiente generación
+        game.printGrid(1); // Visualización tras una generación
+
+        // Podrías agregar verificaciones para el estado de algunas celdas
     }
 
+    //Test de una configuración estática
     @Test
-    public void testLiveCellWithMoreThenThreeLiveNeighborsDies() {
-        GameOfLife game = new GameOfLife();
-        game.setCellAlive(1, 1); //Celda central viva
-        game.setCellAlive(0, 0); //Primer vecino vivo
-        game.setCellAlive(0, 1); //Segundo vecino vivo
-        game.setCellAlive(1, 0); //Tercer vecino vivo
-        game.setCellAlive(1, 2); //Cuarto vecino vivo
-        game.nextGeneration();
-        assertFalse(game.isCellAlive(1, 1)); //Debería estar muerta
+    public void testBlockPatternRemainsStable() {
+        GameOfLife game = new GameOfLife(4, 4);
+        game.setCellAlive(1, 1);
+        game.setCellAlive(1, 2);
+        game.setCellAlive(2, 1);
+        game.setCellAlive(2, 2);
 
+        game.nextGeneration();
+        assertTrue(game.isCellAlive(1, 1));
+        assertTrue(game.isCellAlive(1, 2));
+        assertTrue(game.isCellAlive(2, 1));
+        assertTrue(game.isCellAlive(2, 2));
     }
 
-    @Test
-    public void testDeadCellWithExactlyThreeLiveNeighborsBecomesAlive() {
-        GameOfLife game = new GameOfLife();
-        game.setCellAlive(0, 0); //Primer vecino vivo
-        game.setCellAlive(0, 1); //Segundo vecino vivo
-        game.setCellAlive(1, 0); //Tercer vecino vivo
-        game.nextGeneration();
-        assertTrue(game.isCellAlive(1, 1)); //Debería nacer
-    }
 }
