@@ -58,5 +58,58 @@ public class GameOfLifeTest {
         assertTrue(game.isCellAlive(2, 3));
     }
 
+    //Tes de una celda aislada (muerte por baja población)
+    @Test
+    public void testIsolatedCellDies() {
+        GameOfLife game = new GameOfLife(3, 3);
+        game.setCellAlive(1, 1);
+
+        game.nextGeneration();
+        assertFalse(game.isCellAlive(1, 1)); // La celda debe estar muerta en la siguiente generación
+    }
+
+    //Test de una celda con más de tres vecinos vivos (muerte por sobrepoblación)
+    @Test
+    public void testOverpopulatedCellDies() {
+        GameOfLife game = new GameOfLife(3, 3);
+        game.setCellAlive(1, 1);
+        game.setCellAlive(0, 0);
+        game.setCellAlive(0, 1);
+        game.setCellAlive(0, 2);
+        game.setCellAlive(1, 0);
+        game.setCellAlive(1, 2);
+        game.setCellAlive(2, 0);
+        game.setCellAlive(2, 1);
+        game.setCellAlive(2, 2);
+
+        game.nextGeneration();
+        assertFalse(game.isCellAlive(1, 1)); // La celda debe estar muerta en la siguiente generación
+    }
+
+    //Test de una celda que nace con tres vecinos vivos
+    @Test
+    public void testDeadCellWithThreeNeighborsComesToLife() {
+        GameOfLife game = new GameOfLife(3, 3);
+        game.setCellAlive(0, 1);
+        game.setCellAlive(1, 0);
+        game.setCellAlive(1, 2);
+
+        game.nextGeneration();
+        assertTrue(game.isCellAlive(1, 1)); // La celda debe revivir
+    }
+
+    //Test para un tablero vacío
+    @Test
+    public void testEmptyBoardRemainsEmpty() {
+        GameOfLife game = new GameOfLife(3, 3);
+
+        game.nextGeneration();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                assertFalse(game.isCellAlive(i, j)); // Todas las celdas deben estar muertas
+            }
+        }
+    }
+
 
 }
