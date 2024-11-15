@@ -37,4 +37,26 @@ public class GameOfLifeTest {
         assertTrue(game.isCellAlive(2, 2));
     }
 
+    //Test de configuración oscilante
+    @Test
+    public void testBlinkerPatternOscillates() {
+        GameOfLife game = new GameOfLife(5, 5);
+        game.setCellAlive(2, 1);
+        game.setCellAlive(2, 2);
+        game.setCellAlive(2, 3);
+
+        // Primera generación: el patrón debería rotar 90 grados
+        game.nextGeneration();
+        assertTrue(game.isCellAlive(1, 2));
+        assertTrue(game.isCellAlive(2, 2));
+        assertTrue(game.isCellAlive(3, 2));
+
+        // Segunda generación: el patrón debería volver a la forma inicial
+        game.nextGeneration();
+        assertTrue(game.isCellAlive(2, 1));
+        assertTrue(game.isCellAlive(2, 2));
+        assertTrue(game.isCellAlive(2, 3));
+    }
+
+
 }
