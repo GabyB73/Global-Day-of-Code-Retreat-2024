@@ -13,7 +13,7 @@ Este repositorio contiene ejercicios realizados durante el **Global Day of Code 
 
 Ve a la carpeta java/.
 
-Asegúrate de tener JUnit configurado.
+Asegúrate de tener JUnit 4 configurado.
 
 Ejecuta:
 ```bash
